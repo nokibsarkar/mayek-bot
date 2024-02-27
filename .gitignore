@@ -1,0 +1,7 @@
+/.env
+/__pycache__
+/mni_ns_list.json
+/mni_ns_patterns.txt
+/mni_transliteration_last_run.txt
+/t.txt
+/t_rev.txt
