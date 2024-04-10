@@ -60,20 +60,23 @@ def send_message(lang, title, message, summary, csrf=None, sectiontitle='New mes
         'bot': '1',
     }
     response = BaseServer.post(lang=lang, data=params)
-def edit_page(lang, title, text, summary, csrf=None, recreate=True, captchaid=None, captchaword=None):
+def edit_page(lang, title,  summary, text=None, csrf=None, recreate=True, captchaid=None, captchaword=None, prependtext=None):
     if csrf is None:
         csrf = get_csrf_token(lang)
     params = {
         'action': 'edit',
         'title': title,
         'summary': summary,
-        'text': text,
         'token': csrf,
         'format': 'json',
         'notminor': '1',
         'bot': '1',
         'recreate': recreate
     }
+    if text is not None:
+        params['text'] = text
+    elif prependtext is not None:
+        params['prependtext'] = prependtext
     if captchaid is not None and captchaword is not None:
         params['captchaid'] = captchaid
         params['captchaword'] = captchaword
