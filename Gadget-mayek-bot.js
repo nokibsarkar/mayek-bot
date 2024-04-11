@@ -139,6 +139,11 @@ class MayekBot {
         });
         submitButton.on('click', function () {
             progressBar.toggle(true);
+            submitButton.setDisabled(true);
+            cancelButton.setDisabled(true);
+            contentInput.toggle(false);// Disable the content input
+            summaryInput.setDisabled(true);
+            transliteratedTitleInput.setDisabled(true);
             onSubmit({
                 title: transliteratedTitleInput.getValue(),
                 content: contentInput.getValue(),
