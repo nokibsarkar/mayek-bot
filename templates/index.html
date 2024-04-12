@@ -5,17 +5,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mayek Bot</title>
+    <link rel="stylesheet" href="../style.css">
 </head>
 
 <body>
     <form id="transliterateForm" enctype="multipart/form-data" method="POST" action="/">
-        <textarea name="text" id="text" cols="30" rows="10"
+        <textarea name="text" id="text" 
             placeholder="Enter text to transliterate">{{original_text or ''}}</textarea>
         <button type="submit" id="transliterateButton">
             Transliterate
         </button>
         {% if transliterated_text %}
-        <textarea id="transliterated" cols="30" rows="10"
+        <textarea id="transliterated" 
             placeholder="Transliterated text">{{transliterated_text}}</textarea>
         {% endif %}
     </form>
