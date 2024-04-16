@@ -247,7 +247,7 @@ class MayekBot {
                                 }
                             }
                         })
-                        const transliteratedTitle = await transliterate(title);
+                        const transliteratedTitle = "ꯕꯦꯡꯒꯂꯤ ꯃꯌꯦꯛ:" + await transliterate(title);
                         if (transliteratedTitle === title) {
                             throw new Error(MayekBot.MayekMessages['error.titleAlreadyBengali']);
                         }
