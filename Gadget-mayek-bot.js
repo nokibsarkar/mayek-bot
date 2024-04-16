@@ -214,6 +214,21 @@ class MayekBot {
                         const contentBox = document.querySelector('textarea#wpTextbox1, textarea#wikitext-editor');
                         const summaryBox = document.querySelector('input#wpSummary,div.summary > textarea');
                         const minorEditBox = document.querySelector('input#wpMinoredit');
+                        const currentURL = new URL(window.location.href);
+                        const searchParams = currentURL.searchParams;
+                        let section = searchParams.get('section');
+                        if(!section){
+                            const mobileSectionPattern = /^#\/editor\/(\S+)/
+                            const hash = currentURL.hash;
+                            const match = hash.match(mobileSectionPattern);
+                            if(match){
+                                section = match[1];
+                            }
+                            if(section == "all")
+                                section = null;
+                        }
+
+                        // const section = mw.config.get('wgAction') === 'edit' ? mw.config.get('wgCurRevisionId') : '';
                         const resultLoaded = MayekBot.showEditDialog({
                             onCancel: async () => {
                                 done = true;
@@ -226,13 +241,21 @@ class MayekBot {
                             }) => {
                                 try {
                                     const api = new mw.Api();
-                                    const resp = await api.postWithEditToken({
+                                    const data = {
                                         action: 'edit',
                                         title: title,
                                         text: content,
                                         summary: summary,
-                                        minor: minorEditBox?.checked
-                                    })
+                                        minor: minorEditBox?.checked,
+                                    }
+                                    if (section) {
+                                        data.section = section;
+                                        if (section == "new") {
+                                            // Also grab section title
+                                            data.sectiontitle = summary;
+                                        }
+                                    }
+                                    const resp = await api.postWithEditToken(data);
                                     if (resp.error) {
                                         throw new Error(resp.error.info);
                                     }
